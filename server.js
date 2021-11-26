@@ -20,7 +20,8 @@ app.get('/', (req, res, next) => {
 });
 
 // Routes
-// app.use('/auth', require('./routes/auth'));
+app.use('/auth', require('./routes/auth'));
+app.use('/user', require('./routes/user'));
 
 // Connect DB and Initialize server
 connectDb();
