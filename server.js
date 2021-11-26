@@ -1,8 +1,7 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
-const db = require('./db/dbconnect');
-const dbsync = require('./db/dbsync');
+const connectDb = require('./db/dbconnect');
 
 // Body parser
 app.use(express.json());
@@ -21,14 +20,12 @@ app.get('/', (req, res, next) => {
 });
 
 // Routes
-// app.use('/auth', require('./routes/auth'));
+app.use('/auth', require('./routes/auth'));
+app.use('/user', require('./routes/user'));
 
 // Connect DB and Initialize server
-const PORT = process.env.PORT;
-(async function () {
-  await db.connetDb();
-  await dbsync();
-  app.listen(PORT, () => {
-    console.log(`#### Server running on port ${PORT}...`);
-  });
-})();
+connectDb();
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`### Server running on port ${PORT}`);
+});
