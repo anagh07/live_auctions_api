@@ -22,6 +22,7 @@ app.get('/', (req, res, next) => {
 // Routes
 app.use('/auth', require('./routes/auth'));
 app.use('/user', require('./routes/user'));
+app.use('/ad', require('./routes/ad'));
 
 // Connect DB and Initialize server
 connectDb();
