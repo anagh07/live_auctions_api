@@ -6,19 +6,14 @@ const router = express.Router();
 
 const isAuth = require('../middlewares/isAuth');
 
+// TODO:
 // @route   POST /room
-// @desc    Register user
-// @access  public
-router.post(
-  '/',
-  [
-    body('username', 'Invalid name').trim().not().isEmpty(),
-    body('email', 'Invalid email').trim().isEmail(),
-    body('password', 'Enter valid password with min length of 6 char')
-      .trim()
-      .isLength({ min: 6 }),
-  ],
-  userController.registerUser
-);
+// @desc    Add user to a room
+// @access  protected
+
+// TODO:
+// @route   delete /room/:roomId/:userId
+// @desc    Remove user from room
+// @access  protected
 
 module.exports = router;

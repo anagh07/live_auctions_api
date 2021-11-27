@@ -23,6 +23,7 @@ app.get('/', (req, res, next) => {
 app.use('/auth', require('./routes/auth'));
 app.use('/user', require('./routes/user'));
 app.use('/ad', require('./routes/ad'));
+app.use('/bid', require('./routes/bid'));
 
 // Connect DB and Initialize server
 connectDb();
