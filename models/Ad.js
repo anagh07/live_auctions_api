@@ -73,6 +73,10 @@ const adSchema = new mongoose.Schema(
         },
       },
     ],
+    room: {
+      type: types.ObjectId,
+      ref: 'room',
+    },
   },
   { timestamps: true }
 );
