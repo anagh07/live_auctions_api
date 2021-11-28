@@ -26,12 +26,13 @@ exports.addAd = async (req, res, next) => {
       category,
       owner: req.user.id,
     });
-    ad = await ad.save();
 
     // Create room for auction
     let room = new Room({ ad: ad._id });
     room = await room.save();
 
+    ad.room = room._id;
+    ad = await ad.save();
     res.status(200).json({ ad, room });
   } catch (err) {
     console.log(err);
