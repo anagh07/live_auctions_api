@@ -34,4 +34,9 @@ router.get('/:id', isAuth, adController.findAd);
 // @access  protected
 router.put('/:id', isAuth, adController.updateAd);
 
+// @route   DELETE /ad/:id
+// @desc    Delete an ad
+// @access  protected
+router.delete('/:id', isAuth, adController.deleteAd);
+
 module.exports = router;

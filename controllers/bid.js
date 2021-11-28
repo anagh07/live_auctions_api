@@ -8,9 +8,7 @@ exports.addBid = async (req, res, next) => {
 
   try {
     const ad = await Ad.findById(adId);
-    console.log('Current price: ', ad.currentPrice);
-    console.log('Bid amount: ', amount);
-
+    if (!ad) return res.status(404).json({ errors: [{ msg: 'Ad not found' }] });
     // Check bid validity
     if (parseFloat(ad.currentPrice) >= parseFloat(amount)) {
       return res

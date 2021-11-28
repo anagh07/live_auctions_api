@@ -92,6 +92,13 @@ exports.updateAd = async (req, res, next) => {
 
   const adId = req.params.id;
   try {
+    // Check for authorization
+    let ad = await Ad.findById(adId);
+    if (!ad) return res.status(404).json({ errors: [{ msg: 'Ad not found' }] });
+    if (ad.owner != req.user.id)
+      return res
+        .status(401)
+        .json({ errors: [{ msg: 'Unauthorized to delete this ad' }] });
     // Update all fields sent in body
     if (req.body.basePrice) {
       req.body.currentPrice = req.body.basePrice;
@@ -101,6 +108,29 @@ exports.updateAd = async (req, res, next) => {
     updatedAd = await Ad.findById(adId);
 
     res.status(200).json(updatedAd);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ errors: [{ msg: 'Server error' }] });
+  }
+};
+
+// @route   DELETE /ad/:id
+// @desc    Delete an ad
+exports.deleteAd = async (req, res, next) => {
+  const adId = req.params.id;
+  try {
+    let ad = await Ad.findById(adId);
+    if (!ad) return res.status(404).json({ errors: [{ msg: 'Ad not found' }] });
+    if (ad.owner != req.user.id)
+      return res
+        .status(401)
+        .json({ errors: [{ msg: 'Unauthorized to delete this ad' }] });
+    if (ad.auctionStarted || ad.auctionEnded)
+      return res
+        .status(404)
+        .json({ errors: [{ msg: 'Cannot delete, auction started/ended' }] });
+    await Ad.deleteOne(ad);
+    res.status(200).json({ msg: 'Deleted' });
   } catch (err) {
     console.log(err);
     res.status(500).json({ errors: [{ msg: 'Server error' }] });
