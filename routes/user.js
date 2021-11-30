@@ -21,7 +21,7 @@ router.post(
   userController.registerUser
 );
 
-// @route   GET /users/:id
+// @route   GET /user/:id
 // @desc    Get user by id
 // @access  protected
 router.get('/:id', isAuth, userController.getUserById);
