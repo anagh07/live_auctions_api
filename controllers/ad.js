@@ -71,8 +71,8 @@ exports.findAd = async (req, res, next) => {
 
   const adId = req.params.id; // id of type ObjectId (61a18153f926fdc2dd16d78b)
   try {
-    const ad = await Ad.findById(adId);
-    if (!ad) res.status(404).json({ errors: [{ msg: 'Ad not found' }] });
+    const ad = await Ad.findById(adId).populate('owner', { password: 0 });
+    if (!ad) return res.status(404).json({ errors: [{ msg: 'Ad not found' }] });
     res.status(200).json(ad);
   } catch (err) {
     console.log(err);
