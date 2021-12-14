@@ -55,7 +55,7 @@ exports.retrieveAds = async (req, res, next) => {
   let adList = [];
   try {
     if (user) {
-      adList = await Ad.find({ owner: user });
+      adList = await Ad.find({ owner: user }).sort({ createdAt: -1 });
     } else {
       adList = await Ad.find().sort({ createdAt: -1 });
     }
