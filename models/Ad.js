@@ -7,6 +7,9 @@ const adSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    description: {
+      type: String,
+    },
     basePrice: {
       type: types.Decimal128,
       required: true,

@@ -12,12 +12,13 @@ exports.addAd = async (req, res, next) => {
     });
   }
 
-  const { productName, basePrice, duration, image, category } = req.body;
+  const { productName, basePrice, duration, image, category, description } = req.body;
   const timer = duration === null ? 300 : duration;
 
   try {
     let ad = new Ad({
       productName,
+      description,
       basePrice,
       currentPrice: basePrice,
       duration,
@@ -50,8 +51,14 @@ exports.retrieveAds = async (req, res, next) => {
     });
   }
 
+  const { user } = req.query;
+  let adList = [];
   try {
-    const adList = await Ad.find().sort({ createdAt: -1 });
+    if (user) {
+      adList = await Ad.find({ owner: user });
+    } else {
+      adList = await Ad.find().sort({ createdAt: -1 });
+    }
     res.status(200).json(adList);
   } catch (err) {
     console.log(err);
