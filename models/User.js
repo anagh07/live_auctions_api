@@ -21,6 +21,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  purchasedProducts: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'ad',
+    },
+  ],
+  bids: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'ad',
+    },
+  ],
 });
 
 module.exports = mongoose.model('user', userSchema);

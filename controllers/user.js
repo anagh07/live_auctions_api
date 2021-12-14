@@ -68,3 +68,15 @@ exports.getUserById = async (req, res) => {
     res.status(500).json({ errors: [{ msg: 'User already exists' }] });
   }
 };
+
+exports.purchasedProducts = async (req, res) => {
+  const { user } = req;
+  try {
+    const fetchedUser = await User.findById(user.id);
+    await fetchedUser.populate('purchasedProducts');
+    res.status(200).json(fetchedUser.purchasedProducts);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ errors: [{ msg: 'Server error' }] });
+  }
+};

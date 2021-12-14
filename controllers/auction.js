@@ -1,4 +1,5 @@
 const Ad = require('../models/Ad');
+const User = require('../models/User');
 
 // @route   POST /auction/start/:adId
 // @desc    Start auction
@@ -21,10 +22,9 @@ exports.startAuction = async (req, res, next) => {
     let duration = parseInt(ad.duration);
     let timer = parseInt(ad.timer);
     let intervalTimer = setInterval(async () => {
-      timer -= 2;
+      timer -= 1;
       await ad.updateOne({ timer: timer });
-      console.log(timer);
-    }, 2000);
+    }, 1000);
     setTimeout(async () => {
       clearInterval(intervalTimer);
       let auctionEndAd = await Ad.findById(adId);
@@ -32,7 +32,11 @@ exports.startAuction = async (req, res, next) => {
       auctionEndAd.sold = true;
       auctionEndAd.auctionEnded = true;
       await auctionEndAd.save();
-    }, (duration + 2) * 1000);
+      // Add product to winner
+      let winner = await User.findById(auctionEndAd.currentBidder);
+      winner.purchasedProducts.push(auctionEndAd._id);
+      await winner.save();
+    }, (duration + 1) * 1000);
   } catch (err) {
     console.log(err);
     res.status(500).json({ errors: [{ msg: 'Server error' }] });
