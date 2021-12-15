@@ -1,0 +1,253 @@
+
+# Document metadata
+info:
+  version: "0.3.0"
+  title: Live_Auction
+  description: Auction API
+
+# Endpoints
+paths:
+  /auth:
+    get:
+      tags:
+      - "auth"
+      description: Returns users
+      parameters:
+        - name: User
+          in: query
+          required: false
+          type: integer
+          description: User Details
+      responses:
+        200:
+          description: Successful response
+    post:
+      tags:
+      - "auth"
+      parameters:
+        - name: userauthentication
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/userauthentication"
+          description: Playlist object in json
+      responses:
+        200:
+          description: Successful response
+  /user:
+    post:
+      tags:
+      - "auth"
+      parameters:
+        - name: newuser
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/newuser"
+          description: Registering the new user
+      responses:
+        200:
+          description: Successfully added the user
+  /ad:
+    post:
+      tags:
+      - "ad"
+      description: "Operation to post the advertisement with details"
+      parameters:
+        - name: Product
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/product"
+          description: Playlist object in json
+              
+      responses:
+        201:
+          description: "Successfully posted the advertisement with details"
+    get:
+      tags:
+      - "ad"
+      parameters:
+        - name: product
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/product"
+      responses:
+        200:
+          description: Successfully fetched user details
+  /ad/{id}:
+    get:
+      tags:
+      - "ad"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: Fetching details based on the ID
+      responses:
+        200:
+          description: Successfully fetched details based on path parameters
+    put:
+      tags:
+      - "ad"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: Adding details
+      responses:
+        200:
+          description: Successfully adding details based on path parameters
+    delete:
+      tags:
+      - "ad"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: Deleting details
+      responses:
+        200:
+          description: Successfully deleting details based on path parameters
+  /bid:
+    post:
+      tags:
+      - "bid"
+      parameters:
+        - name: Bid
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/price"
+      responses:
+        201:
+          description: Successfully posting the price for the bid
+  /bid/{id}:
+    get:
+      tags:
+      - "bid"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: Fetching details based on the ID
+      responses:
+        200:
+          description: Successfully fetched details of bid
+  /bid/{highest}:
+    get:
+      tags:
+      - "room"
+      parameters:
+        - name: highest
+          in: path
+          required: true
+          type: integer
+          description: Fetching details of bid in the present room
+      responses:
+        200:
+          description: Successfully fetched details of bid
+  /room/join:
+    post:
+      tags:
+      - "room"
+      parameters:
+        - name: room
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/room"
+      responses:
+        201:
+          description: Successfully joining the auction room
+  /room/{token}:
+    get:
+      tags:
+      - "room"
+      parameters:
+        - name: token
+          in: path
+          required: true
+          type: integer
+          description: Fetching details of bid in the present room
+      responses:
+        200:
+          description: Successfully fetched details of bid
+          
+  /auction/start/{61a2fe60dd72655f732ef4ae}:
+    get:
+      tags:
+      - "auction"
+      parameters:
+        - name: 61a2fe60dd72655f732ef4ae
+          in: path
+          required: true
+          type: integer
+          description: Fetching details of auction
+      responses:
+        200:
+          description: Successfully fetched details of auction
+  
+
+definitions:
+  room:
+    properties:
+      amount:
+        type: integer
+        example: 52
+
+  price:
+    properties:
+      price:
+        type: integer
+        
+  newuser:
+    properties:
+      Email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+      phone:
+        type: integer
+      address:
+        type: string
+    description: newuser information
+  userauthentication:
+    properties:
+      Email:
+        type: string
+      password:
+        type: string
+        items:
+          type: string
+    required:
+      - Email
+    description: User Authentication 
+  product:
+    properties:
+      productname:
+        type: string
+        example: TestAd
+      basePrice:
+        type: integer
+        example: 10
+      duration:
+        type: integer
+        example: 60
+      category:
+        type: string
+        example: food
+      image:
+        type: string
+        example: https://imgur.com/FRlMD7Z.jpg
+securityDefinitions:
+  basicAuth:
+    type: basic
+    description: Username and password
