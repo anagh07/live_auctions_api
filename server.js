@@ -1,7 +1,12 @@
 const express = require('express');
-const app = express();
 require('dotenv').config();
 const connectDb = require('./db/dbconnect');
+const { createServer } = require('http');
+const socketio = require('./socket');
+
+const app = express();
+const server = createServer(app);
+const io = socketio.init(server);
 
 // Body parser
 app.use(express.json());
@@ -30,6 +35,9 @@ app.use('/auction', require('./routes/auction'));
 // Connect DB and Initialize server
 connectDb();
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+io.on('connection', (socket) => {
+  console.log('### Socket IO client connected');
+});
+server.listen(PORT, () => {
   console.log(`### Server running on port ${PORT}`);
 });

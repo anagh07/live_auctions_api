@@ -1,4 +1,5 @@
 const Ad = require('../models/Ad');
+const io = require('../socket');
 
 // @route   POST /bid/:adId
 // @desc    Post a new ad
@@ -7,7 +8,7 @@ exports.addBid = async (req, res, next) => {
   const { amount } = req.query;
 
   try {
-    const ad = await Ad.findById(adId);
+    const ad = await Ad.findById(adId).populate('owner', { password: 0 });
     if (!ad) return res.status(404).json({ errors: [{ msg: 'Ad not found' }] });
     // Check bid validity
     if (parseFloat(ad.currentPrice) >= parseFloat(amount)) {
@@ -24,6 +25,7 @@ exports.addBid = async (req, res, next) => {
     ad.currentPrice = amount;
     ad.currentBidder = req.user.id;
     const savedAd = await ad.save();
+    io.getIo().emit('bidPosted', { action: 'bid', data: ad });
     res.status(200).json(savedAd);
   } catch (error) {
     console.log(error);
