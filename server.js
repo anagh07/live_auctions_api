@@ -37,6 +37,9 @@ connectDb();
 const PORT = process.env.PORT || 5000;
 io.on('connection', (socket) => {
   console.log('### Socket IO client connected');
+  socket.on('disconnect', (reason) => {
+    console.log('### Socket IO client disconnected');
+  });
 });
 server.listen(PORT, () => {
   console.log(`### Server running on port ${PORT}`);

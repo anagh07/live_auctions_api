@@ -26,7 +26,10 @@ exports.startAuction = async (req, res, next) => {
     let intervalTimer = setInterval(async () => {
       timer -= 1;
       await ad.updateOne({ timer: timer });
-      io.getIo().emit('timer', { action: 'timerUpdate', data: timer });
+      io.getIo().emit('timer', {
+        action: 'timerUpdate',
+        data: { timer: timer, _id: ad._id },
+      });
     }, 1000);
     setTimeout(async () => {
       clearInterval(intervalTimer);
