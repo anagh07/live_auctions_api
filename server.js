@@ -7,6 +7,7 @@ const socketio = require('./socket');
 const app = express();
 const server = createServer(app);
 const io = socketio.init(server);
+const adIo = socketio.initAdIo(server, '/socket/adpage');
 
 // Body parser
 app.use(express.json());
@@ -32,15 +33,30 @@ app.use('/bid', require('./routes/bid'));
 app.use('/room', require('./routes/room'));
 app.use('/auction', require('./routes/auction'));
 
-// Connect DB and Initialize server
-connectDb();
+// Socket.io setup
 const PORT = process.env.PORT || 5000;
 io.on('connection', (socket) => {
-  console.log('### Socket IO client connected');
+  // console.log('### Socket IO client connected');
   socket.on('disconnect', (reason) => {
-    console.log('### Socket IO client disconnected');
+    // console.log('### Socket IO client disconnected');
   });
 });
+adIo.on('connect', (socket) => {
+  // socket.join('testroom')
+  socket.on('joinAd', ({ ad }) => {
+    socket.join(ad.toString());
+    console.log(`User joined room ${ad}`);
+  });
+  socket.on('leaveAd', ({ ad }) => {
+    socket.leave(ad.toString());
+    console.log(`Left room ${ad}`);
+  });
+  socket.on('disconnect', () => {
+    console.log('User has disconnect from ad');
+  });
+});
+// Connect DB and Initialize server
+connectDb();
 server.listen(PORT, () => {
   console.log(`### Server running on port ${PORT}`);
 });

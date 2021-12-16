@@ -17,7 +17,10 @@ exports.startAuction = async (req, res, next) => {
       return res.status(400).json({ errors: [{ msg: 'Already started' }] });
     ad.auctionStarted = true;
     await ad.save();
-    io.getIo().emit('auctionStarted', { action: 'started', data: ad });
+    // io.getIo().emit('auctionStarted', { action: 'started', data: ad });
+    io.getAdIo()
+      .to(ad._id.toString())
+      .emit('auctionStarted', { action: 'started', data: ad });
     res.status(200).json({ msg: 'Auction started' });
 
     // Run down timer
@@ -26,10 +29,12 @@ exports.startAuction = async (req, res, next) => {
     let intervalTimer = setInterval(async () => {
       timer -= 1;
       await ad.updateOne({ timer: timer });
-      io.getIo().emit('timer', {
-        action: 'timerUpdate',
-        data: { timer: timer, _id: ad._id },
-      });
+      io.getAdIo()
+        .to(ad._id.toString())
+        .emit('timer', {
+          action: 'timerUpdate',
+          data: { timer: timer, _id: ad._id },
+        });
     }, 1000);
     setTimeout(async () => {
       clearInterval(intervalTimer);
@@ -44,7 +49,9 @@ exports.startAuction = async (req, res, next) => {
         winner.purchasedProducts.push(auctionEndAd._id);
         await winner.save();
       }
-      io.getIo().emit('auctionEnded', { action: 'sold', data: auctionEndAd });
+      io.getAdIo()
+        .to(auctionEndAd._id)
+        .emit('auctionEnded', { action: 'sold', data: auctionEndAd });
     }, (duration + 1) * 1000);
   } catch (err) {
     console.log(err);
