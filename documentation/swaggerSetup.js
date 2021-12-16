@@ -4,7 +4,7 @@ const apiBaseUrl = process.env.API_BASE_URL || 'http://localhost:5000';
 const options = {
   apis: ['./documentation/doc.yaml'],
   definition: {
-    openapi: '3.0.0',
+    swagger: '2.0',
     info: {
       title: 'Live Auctions API',
       version: '1.0.0',
