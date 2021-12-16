@@ -25,7 +25,9 @@ exports.addBid = async (req, res, next) => {
     ad.currentPrice = amount;
     ad.currentBidder = req.user.id;
     const savedAd = await ad.save();
-    io.getIo().emit('bidPosted', { action: 'bid', data: ad });
+    // io.getIo().emit('bidPosted', { action: 'bid', data: ad });
+    console.log(`Emitting to ${ad._id}`);
+    io.getAdIo().to(ad._id.toString()).emit('bidPosted', { action: 'post', data: ad });
     res.status(200).json(savedAd);
   } catch (error) {
     console.log(error);
