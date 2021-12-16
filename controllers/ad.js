@@ -39,10 +39,7 @@ exports.addAd = async (req, res, next) => {
     ad.room = room._id;
     ad = await ad.save();
 
-    io.getIo().on('connect', (socket) => {
-      console.log('ad ad emit');
-      socket.broadcast.emit('addAd', { action: 'add', ad: ad });
-    });
+    io.getIo().emit('addAd', { action: 'add', ad: ad });
 
     res.status(200).json({ ad, room });
   } catch (err) {
