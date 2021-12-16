@@ -27,6 +27,12 @@ const userSchema = new mongoose.Schema({
       ref: 'ad',
     },
   ],
+  postedAds: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'ad',
+    },
+  ],
   bids: [
     {
       type: mongoose.Types.ObjectId,

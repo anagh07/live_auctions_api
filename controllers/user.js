@@ -80,3 +80,15 @@ exports.purchasedProducts = async (req, res) => {
     res.status(500).json({ errors: [{ msg: 'Server error' }] });
   }
 };
+
+exports.postedProducts = async (req, res) => {
+  const { user } = req;
+  try {
+    const fetchedUser = await User.findById(user.id);
+    await fetchedUser.populate('postedAds');
+    res.status(200).json(fetchedUser.postedAds);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ errors: [{ msg: 'Server error' }] });
+  }
+};

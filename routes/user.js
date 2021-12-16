@@ -31,4 +31,9 @@ router.get('/:id', isAuth, userController.getUserById);
 // @access  protected
 router.get('/products/purchased', isAuth, userController.purchasedProducts);
 
+// @route   GET /user/posted
+// @desc    Get product ads posted by user
+// @access  protected
+router.get('/products/posted', isAuth, userController.postedProducts);
+
 module.exports = router;
