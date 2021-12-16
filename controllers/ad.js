@@ -13,8 +13,11 @@ exports.addAd = async (req, res, next) => {
     });
   }
 
-  const { productName, basePrice, duration, image, category, description } = req.body;
-  const timer = duration === null ? 300 : duration;
+  let { productName, basePrice, duration, image, category, description } = req.body;
+  if (duration === null || duration === 0) {
+    duration = 300;
+  }
+  const timer = duration;
 
   try {
     let ad = new Ad({
@@ -36,7 +39,10 @@ exports.addAd = async (req, res, next) => {
     ad.room = room._id;
     ad = await ad.save();
 
-    io.getIo().emit('addAd', { action: 'add', ad: ad });
+    io.getIo().on('connect', (socket) => {
+      console.log('ad ad emit');
+      socket.broadcast.emit('addAd', { action: 'add', ad: ad });
+    });
 
     res.status(200).json({ ad, room });
   } catch (err) {
