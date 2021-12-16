@@ -24,6 +24,8 @@ exports.startAuction = async (req, res, next) => {
     res.status(200).json({ msg: 'Auction started' });
 
     // Run down timer
+    ad.timer = parseInt(ad.duration);
+    ad.auctionEnded = false;
     let duration = parseInt(ad.duration);
     let timer = parseInt(ad.timer);
     let intervalTimer = setInterval(async () => {
@@ -38,23 +40,32 @@ exports.startAuction = async (req, res, next) => {
     }, 1000);
     setTimeout(async () => {
       clearInterval(intervalTimer);
-      let auctionEndAd = await Ad.findById(adId).populate('owner', { password: 0 });
-      auctionEndAd.purchasedBy = auctionEndAd.currentBidder;
-      auctionEndAd.sold = true;
+      let auctionEndAd = await Ad.findById(ad._id).populate('owner', { password: 0 });
       auctionEndAd.auctionEnded = true;
-      await auctionEndAd.save();
-      // Add product to winner
+      auctionEndAd.timer = 0;
       if (auctionEndAd.currentBidder) {
+        console.log('ad sold');
+        auctionEndAd.purchasedBy = auctionEndAd.currentBidder;
+        auctionEndAd.sold = true;
+        await auctionEndAd.save();
+        // Add product to winner
         let winner = await User.findById(auctionEndAd.currentBidder);
         winner.purchasedProducts.push(auctionEndAd._id);
         await winner.save();
+        io.getAdIo()
+          .to(auctionEndAd._id.toString())
+          .emit('auctionEnded', { action: 'sold', ad: auctionEndAd, winner: winner });
+      } else {
+        io.getAdIo()
+          .to(auctionEndAd._id.toString())
+          .emit('auctionEnded', { action: 'notSold', data: auctionEndAd });
+        await auctionEndAd.save();
       }
-      io.getAdIo()
-        .to(auctionEndAd._id)
-        .emit('auctionEnded', { action: 'sold', data: auctionEndAd });
     }, (duration + 1) * 1000);
   } catch (err) {
     console.log(err);
     res.status(500).json({ errors: [{ msg: 'Server error' }] });
   }
 };
+
+const runTimer = async (ad) => {};
