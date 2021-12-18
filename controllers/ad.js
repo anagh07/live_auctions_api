@@ -18,6 +18,7 @@ exports.addAd = async (req, res, next) => {
   if (duration === null || duration === 0) {
     duration = 300;
   }
+  image = image === '' ? '' : `${process.env.SERVER_BASE_URL}${image}`;
   const timer = duration;
 
   try {
