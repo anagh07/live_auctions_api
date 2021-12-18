@@ -19,7 +19,7 @@ router.post(
   adController.addAd
 );
 
-// @route   GET /ad?user=<userId>
+// @route   GET /ad?user=<userId>&option=<active>
 // @desc    Retrieve list of all ads. Optional query param of user.
 // @access  protected
 router.get('/?', isAuth, adController.retrieveAds);

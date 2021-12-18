@@ -64,11 +64,15 @@ exports.retrieveAds = async (req, res, next) => {
     });
   }
 
-  const { user } = req.query;
+  const { user, option } = req.query;
   let adList = [];
   try {
     if (user) {
       adList = await Ad.find({ owner: user }).sort({ createdAt: -1 });
+    } else if (option === 'notexpired') {
+      alList = await Ad.find({ auctionEnded: false, sold: false }).sort({
+        createdAt: -1,
+      });
     } else {
       adList = await Ad.find().sort({ createdAt: -1 });
     }
