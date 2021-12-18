@@ -70,7 +70,7 @@ exports.retrieveAds = async (req, res, next) => {
     if (user) {
       adList = await Ad.find({ owner: user }).sort({ createdAt: -1 });
     } else if (option === 'notexpired') {
-      alList = await Ad.find({ auctionEnded: false, sold: false }).sort({
+      adList = await Ad.find({ auctionEnded: false }).sort({
         createdAt: -1,
       });
     } else {
