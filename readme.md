@@ -5,7 +5,7 @@ Potential buyers can find the advertisements and bid on them. Auction pages have
 Users also receive a notification once an auction starts/ends.
 
 ### Live link
-- <a href="https://hopeful-kare-e8dde9.netlify.app/"><strong>Click here</strong></a>
+- <a href="https://live-auctions.netlify.app/"><strong>Click here</strong></a>
   <br>
   <br>
 
@@ -42,17 +42,17 @@ Hosting:
 
 ## Screenshots:
 <p align="center">
-  <a href="https://hopeful-kare-e8dde9.netlify.app/">
+  <a href="https://live-auctions.netlify.app/">
     <img width="600" src="./screenshots/home.jpg">
   </a>
 </p>
 <br>
 <p align="center">
-  <a href="https://hopeful-kare-e8dde9.netlify.app/">
+  <a href="https://live-auctions.netlify.app/">
     <img width="600" src="./screenshots/ad.jpg">
   </a>
 </p>
 
 # Notes on using the website
-Project is hosted <a href="https://hopeful-kare-e8dde9.netlify.app/"><strong>here</strong></a>
+Project is hosted <a href="https://live-auctions.netlify.app/"><strong>here</strong></a>
 - If you do not want to register, press the skip button during login. This will log you in as a test user (test@test.com).
