@@ -1,7 +1,7 @@
 # About
-Websites where products can be purchased and sold through auctions. 
-Sellers can upload product image along with information and setup an auction (duration, starting price). 
-Potential buyers can find the advertisements and bid on them. Auction pages have live notification and synchronization features, meaning that once a bid is place by one user, other users who are on the same page will receive the updates without having to refresh the page. 
+Website where products can be purchased and sold via live auctions. \
+Sellers can upload product image along with information and setup an auction (duration, starting price). \
+Potential buyers can find the advertisements and bid on them. Auction pages have live notification and synchronization features, meaning that once a bid is place by one user, other users who are on the same page will receive the updates without having to refresh the page. \
 Users also receive a notification once an auction starts/ends.
 
 ### Live link
