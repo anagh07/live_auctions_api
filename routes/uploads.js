@@ -28,8 +28,15 @@ router.post('/image', isAuth, upload.single('image'), async (req, res) => {
 // @desc    Get image with key
 // @access  protected
 router.get('/image/:key', async (req, res) => {
-  const readStream = getFileStream(req.params.key);
-  readStream.pipe(res);
+  try {
+    const fileBuffer = await getFileStream(req.params.key);
+
+    res.status(200).send(fileBuffer);
+    // readStream.pipe(res);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ errors: { msg: 'Server error' } });
+  }
 });
 
 module.exports = router;
