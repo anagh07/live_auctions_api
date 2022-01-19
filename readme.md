@@ -4,8 +4,9 @@ Sellers can upload product image along with information and setup an auction (du
 Potential buyers can find the advertisements and bid on them. Auction pages have live notification and synchronization features, meaning that once a bid is place by one user, other users who are on the same page will receive the updates without having to refresh the page. \
 Users also receive a notification once an auction starts/ends.
 
-### Live link
-- <a href="https://live-auctions.netlify.app/"><strong>Click here</strong></a>
+### Links
+- <a href="https://live-auctions.netlify.app/"><strong>live website</strong></a>
+- <a href="https://youtu.be/8IAzQQJ47to"><strong>demo video</strong></a>
   <br>
   <br>
 
@@ -19,7 +20,7 @@ Users also receive a notification once an auction starts/ends.
 - Users' history of purchased products and posted ads
 - Notification when new ads are posted
 
-## Language, Frameworks and libraries
+## Language, Frameworks and Libraries
 Backed (REST API):
 - Node.js
 - Express
