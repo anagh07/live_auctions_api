@@ -15,7 +15,7 @@ exports.addAd = async (req, res, next) => {
   }
 
   let { productName, basePrice, duration, image, category, description } = req.body;
-  if (duration === null || duration === 0) {
+  if (duration === null || duration === 0 || duration > 10800) {
     duration = 300;
   }
   image = image === '' ? '' : `${process.env.SERVER_BASE_URL}${image}`;
