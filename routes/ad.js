@@ -15,6 +15,7 @@ router.post(
   [
     body('productName', 'Invalid productName').trim().not().isEmpty(),
     body('basePrice', 'Invalid basePrice').trim().isNumeric(),
+    body('duration', 'Invalid duration').trim().isNumeric(),
   ],
   adController.addAd
 );
