@@ -54,6 +54,15 @@ Hosting:
   </a>
 </p>
 
+## API Documentation
+Api docuementation was created based on the OpenAPI Specification (OAS) using Swagger.
+**Documentation link**: `api_base_uri/api-docs`
+<p align="center">
+  <a href="https://live-auctions.netlify.app/">
+    <img width="600" src="./screenshots/api-documentation.png">
+  </a>
+</p>
+
 # Notes on using the website
 Project is hosted <a href="https://live-auctions.netlify.app/"><strong>here</strong></a>
 - If you do not want to register, press the skip button during login. This will log you in as a test user (test@test.com).
